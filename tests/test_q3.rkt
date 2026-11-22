@@ -7,10 +7,7 @@
 ; This keeps the solution file strictly compliant with the allowed built-in constraints.
 
 (require racket/runtime-path)
-(define-runtime-path solution-file
-  (if (file-exists? (build-path (current-directory) "../code/6_q3.rkt"))
-      "../code/6_q3.rkt"
-      "../code/id_q3.rkt"))
+(define-runtime-path solution-file "../code/6_q3.rkt")
 
 (define ns (make-base-namespace))
 (parameterize ((current-namespace ns))

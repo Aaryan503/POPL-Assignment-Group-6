@@ -50,6 +50,11 @@ clue(8, S) :-
     Dept == research,
     Lang \== javascript.
 
+% CLUE 9: The friend who prefers embedded projects works in the design department.
+clue(9, S) :-
+    memberchk(p(_, Dept, _, embedded), S),
+    Dept == design.
+
 % solution(S) holds when S is a candidate: Alex, Ben, Carla and Dana (in this order)
 % each get a department, language and project, with every value of each attribute
 % used exactly once. No clue is checked here.
@@ -89,8 +94,3 @@ main :-
 % Mode: all_solutions(+List, -List).
 all_solutions(Active, List) :-
     findall(S, (solution(S), satisfies(Active, S)), List).
-
-% CLUE 9: The friend who prefers embedded projects works in the design department.
-clue(9, S) :-
-    memberchk(p(_, Dept, _, embedded), S),
-    Dept == design.
