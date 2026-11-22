@@ -69,3 +69,29 @@
               (loop (tree-right current)
                     (cons (tree-value current) acc))))))
 
+; (leaf? t): #t if t is a non-empty node whose left and right subtrees are both empty.
+; Accessor check: empty-tree? on both left and right children.
+(define (leaf? t)
+  (and (not (empty-tree? t))
+       (empty-tree? (tree-left t))
+       (empty-tree? (tree-right t))))
+
+; (height t): the height of binary tree t.
+; Base case: the empty tree '() has height 0.
+; Recursive case: 1 plus the maximum of the heights of the left and right subtrees.
+(define (height t)
+  (if (empty-tree? t)
+      0
+      (+ 1 (max (height (tree-left t))
+                (height (tree-right t))))))
+
+; (leaf-count t): the number of leaf nodes in binary tree t.
+; Base cases: an empty tree has 0 leaves; a leaf node has 1 leaf.
+; Recursive case: the sum of the leaf counts of the left and right subtrees.
+(define (leaf-count t)
+  (cond ((empty-tree? t) 0)
+        ((leaf? t) 1)
+        (else (+ (leaf-count (tree-left t))
+                 (leaf-count (tree-right t))))))
+
+
