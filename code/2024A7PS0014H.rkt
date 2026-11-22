@@ -62,3 +62,14 @@
 ; length test is (< len n), applied to lst.
 (define (insert-if-short x lst n)
   ((make-inserter x (lambda (len) (< len n))) lst))
+
+; (print-insert-result): read x, then lst, then n from standard input,
+; and display (insert-if-short x lst n) followed by a newline.
+; let* evaluates the three reads in order, so x is read first.
+; Nothing else is printed.
+(define (print-insert-result)
+  (let* ((x (read))
+         (lst (read))
+         (n (read)))
+    (display (insert-if-short x lst n))
+    (newline)))
