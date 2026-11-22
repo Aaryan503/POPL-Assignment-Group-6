@@ -83,3 +83,9 @@ main :-
     once(( solution(S), satisfies([1,2,3,4,5,6,7,8], S) )),
     forall(member(p(Name, Dept, Lang, Proj), S),
            format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Proj])).
+
+% all_solutions(Active, List) holds when List is the list of all candidates S
+% (from solution/1) that satisfy exactly the clues in Active.
+% Mode: all_solutions(+List, -List).
+all_solutions(Active, List) :-
+    findall(S, (solution(S), satisfies(Active, S)), List).
