@@ -61,3 +61,16 @@ solution([p('Alex', D1, L1, P1),
     permutation([research, development, design, testing], [D1, D2, D3, D4]),
     permutation([python, java, 'c++', javascript], [L1, L2, L3, L4]),
     permutation(['AI', web, embedded, data], [P1, P2, P3, P4]).
+
+% satisfies(Active, S) holds when clue(N, S) holds for every clue number N in Active.
+% An empty Active holds for any S (no clue applies).
+% Mode: satisfies(+List, +List).
+satisfies(Active, S) :-
+    forall(member(N, Active), clue(N, S)).
+
+% count_solutions(Active, N) holds when N is the number of candidates S (from solution/1)
+% that satisfy exactly the clues in Active; all other clues are ignored.
+% Mode: count_solutions(+List, -Int).
+count_solutions(Active, N) :-
+    findall(S, (solution(S), satisfies(Active, S)), Solutions),
+    length(Solutions, N).
