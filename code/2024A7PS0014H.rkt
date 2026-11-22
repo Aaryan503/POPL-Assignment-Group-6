@@ -31,3 +31,24 @@
     (if (null? rest)
         (my-reverse acc)
         (loop (cdr rest) (cons (f (car rest)) acc)))))
+
+; (list-like? e): #t when e is a list (empty or non-empty), #f for an atom.
+; '() counts as a list of length 0, not as an atom.
+(define (list-like? e)
+  (or (null? e) (pair? e)))
+
+; (insert-if-short x lst n): lst with x put at the front of every list,
+; at every level of nesting, whose ORIGINAL length is less than n.
+; Base case: an atom element stays the same.
+; Recursive case: each sublist element is processed by insert-if-short.
+; Then, if (my-length lst) < n, x is consed onto the processed list.
+; The length is measured on lst itself, before any insertion.
+(define (insert-if-short x lst n)
+  (let ((inner (my-map (lambda (e)
+                         (if (list-like? e)
+                             (insert-if-short x e n)
+                             e))
+                       lst)))
+    (if (< (my-length lst) n)
+        (cons x inner)
+        inner)))
