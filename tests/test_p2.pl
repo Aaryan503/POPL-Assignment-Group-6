@@ -1,11 +1,11 @@
-% tests/test_q2.pl: plunit tests for P2 (code/2024A7PS0008H.pl).
+% tests/test_q2.pl: plunit tests for P2 (code/6_q2.pl).
 % Run from the repository root:
 %   swipl -q -f tests/test_q2.pl -g run_tests -t halt
 % (The consult path below is relative to this file, so any directory works.)
 
 :- use_module(library(plunit)).
 :- use_module(library(lists)).
-:- consult('../code/2024A7PS0008H.pl').
+:- consult('../code/6_q2.pl').
 
 % eval_ok(Tree, V) is an independent evaluator used only by the tests: it
 % fails when any division inside Tree has a zero divisor or a remainder.

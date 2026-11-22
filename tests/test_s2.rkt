@@ -1,5 +1,5 @@
 #lang racket/base
-; tests/test_s2.rkt: tests for S2 (code/2024A7PS0014H.rkt).
+; tests/test_s2.rkt: tests for S2 (code/6_q4.rkt).
 ; Run: racket tests/test_s2.rkt   (from any directory)
 ; The solution file has no provide. So we instantiate it with
 ; dynamic-require and get its definitions through module->namespace.
@@ -8,7 +8,7 @@
 ; The data helpers below use only the allowed built-ins.
 
 (require racket/runtime-path)
-(define-runtime-path solution-file "../code/2024A7PS0014H.rkt")
+(define-runtime-path solution-file "../code/6_q4.rkt")
 
 (define ns (make-base-namespace))
 (parameterize ((current-namespace ns))

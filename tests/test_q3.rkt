@@ -1,5 +1,5 @@
 #lang racket/base
-; tests/test_q3.rkt: tests for S1 (code/2024A7PS0171H.rkt).
+; tests/test_q3.rkt: tests for S1 (code/6_q3.rkt).
 ; Run: racket tests/test_q3.rkt
 ;
 ; The solution file contains only definitions (no provide, per assignment rules).
@@ -8,8 +8,8 @@
 
 (require racket/runtime-path)
 (define-runtime-path solution-file
-  (if (file-exists? (build-path (current-directory) "../code/2024A7PS0171H.rkt"))
-      "../code/2024A7PS0171H.rkt"
+  (if (file-exists? (build-path (current-directory) "../code/6_q3.rkt"))
+      "../code/6_q3.rkt"
       "../code/id_q3.rkt"))
 
 (define ns (make-base-namespace))
