@@ -94,4 +94,28 @@
         (else (+ (leaf-count (tree-left t))
                  (leaf-count (tree-right t))))))
 
+; (print-inorder tree): prints the inorder list of values of tree on one line.
+; Evaluates (inorder tree), displays the resulting list, and terminates with a newline.
+(define (print-inorder tree)
+  (display (inorder tree))
+  (newline))
+
+; (print-all-traversals tree): prints the inorder, preorder, and postorder lists
+; on three separate lines, each followed by a newline.
+(define (print-all-traversals tree)
+  (display (inorder tree))
+  (newline)
+  (display (preorder tree))
+  (newline)
+  (display (postorder tree))
+  (newline))
+
+; (print-height-and-leaves tree): prints the list (height leaf-count) on one line.
+; Constructs the list using list and the height and leaf-count functions, displays
+; it, and ends with a newline.
+(define (print-height-and-leaves tree)
+  (display (list (height tree) (leaf-count tree)))
+  (newline))
+
+
 
