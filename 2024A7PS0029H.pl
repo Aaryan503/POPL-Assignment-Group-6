@@ -89,3 +89,8 @@ main :-
 % Mode: all_solutions(+List, -List).
 all_solutions(Active, List) :-
     findall(S, (solution(S), satisfies(Active, S)), List).
+
+% CLUE 9: The friend who prefers embedded projects works in the design department.
+clue(9, S) :-
+    memberchk(p(_, Dept, _, embedded), S),
+    Dept == design.
