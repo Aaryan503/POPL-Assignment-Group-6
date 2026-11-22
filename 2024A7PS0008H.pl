@@ -29,3 +29,43 @@ apply_op(+, A, B, V) :- V is A + B.
 apply_op(-, A, B, V) :- V is A - B.
 apply_op(*, A, B, V) :- V is A * B.
 apply_op(/, A, B, V) :- B =\= 0, A mod B =:= 0, V is A // B.
+
+% tree_string(Tree, Str) holds when Str is the SWI-Prolog string with no
+% spaces that writes Tree in canonical form: * and / bind tighter than + and -,
+% a left operand is parenthesised only if its top operator has lower
+% precedence than its parent, a right operand is parenthesised if its top
+% operator has the same or lower precedence, and a number never is.
+% Mode: tree_string(+Tree, -String).
+tree_string(n(X), Str) :-
+    format(string(Str), "~d", [X]).
+tree_string(op(Op, L, R), Str) :-
+    prec(Op, P),
+    top_prec(L, LP),
+    top_prec(R, RP),
+    tree_string(L, LS0),
+    tree_string(R, RS0),
+    wrap_if(LP < P, LS0, LS),
+    wrap_if(RP =< P, RS0, RS),
+    format(string(Str), "~w~w~w", [LS, Op, RS]).
+
+% prec(Op, P) holds when P is the precedence level of operator Op.
+% Mode: prec(+Op, -Int).
+prec(+, 1).
+prec(-, 1).
+prec(*, 2).
+prec(/, 2).
+
+% top_prec(Tree, P) holds when P is the precedence of the top operator of
+% Tree; a number counts as 3, higher than every operator, so it is never wrapped.
+% Mode: top_prec(+Tree, -Int).
+top_prec(n(_), 3).
+top_prec(op(Op, _, _), P) :- prec(Op, P).
+
+% wrap_if(Cond, S0, S) holds when S is S0 in parentheses if the arithmetic
+% comparison Cond is true, and S0 unchanged otherwise.
+% Mode: wrap_if(+Goal, +String, -String).
+wrap_if(Cond, S0, S) :-
+    (   call(Cond)
+    ->  format(string(S), "(~w)", [S0])
+    ;   S = S0
+    ).
