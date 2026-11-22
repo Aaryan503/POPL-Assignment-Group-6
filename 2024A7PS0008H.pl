@@ -82,3 +82,18 @@ generate_equation(List, Equation) :-
     tree_string(LTree, LStr),
     tree_string(RTree, RStr),
     format(string(Equation), "~w=~w", [LStr, RStr]).
+
+% all_equations(List, Equations) holds when Equations is the sorted list
+% (by sort/2, so without duplicates) of all strings E such that
+% generate_equation(List, E) holds; it is [] when there is none.
+% Mode: all_equations(+List, -Strings).
+all_equations(List, Equations) :-
+    findall(E, generate_equation(List, E), All),
+    sort(All, Equations).
+
+% count_equations(List, N) holds when N is the number of equations in
+% all_equations(List, Equations).
+% Mode: count_equations(+List, -Int).
+count_equations(List, N) :-
+    all_equations(List, Equations),
+    length(Equations, N).
