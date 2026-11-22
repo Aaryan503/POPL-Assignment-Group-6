@@ -37,18 +37,28 @@
 (define (list-like? e)
   (or (null? e) (pair? e)))
 
-; (insert-if-short x lst n): lst with x put at the front of every list,
-; at every level of nesting, whose ORIGINAL length is less than n.
+; (make-inserter x len-ok?): a function of one list. It puts x at the
+; front of every list, at every level of nesting, whose ORIGINAL length
+; satisfies len-ok?.
 ; Base case: an atom element stays the same.
-; Recursive case: each sublist element is processed by insert-if-short.
-; Then, if (my-length lst) < n, x is consed onto the processed list.
-; The length is measured on lst itself, before any insertion.
+; Recursive case: each sublist element is processed by the same inserter.
+; Then, if (len-ok? (my-length lst)) holds, x is consed onto the result.
+; letrec lets the inner function call itself.
+(define (make-inserter x len-ok?)
+  (letrec ((insert
+            (lambda (lst)
+              (let ((inner (my-map (lambda (e)
+                                     (if (list-like? e)
+                                         (insert e)
+                                         e))
+                                   lst)))
+                (if (len-ok? (my-length lst))
+                    (cons x inner)
+                    inner)))))
+    insert))
+
+; (insert-if-short x lst n): lst with x put at the front of every list
+; whose original length is less than n. It is the inserter whose
+; length test is (< len n), applied to lst.
 (define (insert-if-short x lst n)
-  (let ((inner (my-map (lambda (e)
-                         (if (list-like? e)
-                             (insert-if-short x e n)
-                             e))
-                       lst)))
-    (if (< (my-length lst) n)
-        (cons x inner)
-        inner)))
+  ((make-inserter x (lambda (len) (< len n))) lst))
