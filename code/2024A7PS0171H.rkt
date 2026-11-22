@@ -29,3 +29,43 @@
     (if (null? rest)
         acc
         (loop (cdr rest) (cons (car rest) acc)))))
+
+; (inorder t): the list of values of t visited in inorder (left, root, right).
+; Base case: t is '(), so the result is the accumulator acc.
+; Recursive case: traverse the right subtree with acc, cons the root value onto
+; that result, and then traverse the left subtree with the new accumulator.
+; Accumulator-based traversal: no append is used.
+(define (inorder t)
+  (let loop ((current t) (acc '()))
+    (if (empty-tree? current)
+        acc
+        (loop (tree-left current)
+              (cons (tree-value current)
+                    (loop (tree-right current) acc))))))
+
+; (preorder t): the list of values of t visited in preorder (root, left, right).
+; Base case: t is '(), so the result is the accumulator acc.
+; Recursive case: traverse the right subtree with acc, then the left subtree
+; with that result, and finally cons the root value onto the front.
+; Accumulator-based traversal: no append is used.
+(define (preorder t)
+  (let loop ((current t) (acc '()))
+    (if (empty-tree? current)
+        acc
+        (cons (tree-value current)
+              (loop (tree-left current)
+                    (loop (tree-right current) acc))))))
+
+; (postorder t): the list of values of t visited in postorder (left, right, root).
+; Base case: t is '(), so the result is the accumulator acc.
+; Recursive case: cons the root value onto acc, traverse the right subtree with
+; that result, and then traverse the left subtree.
+; Accumulator-based traversal: no append is used.
+(define (postorder t)
+  (let loop ((current t) (acc '()))
+    (if (empty-tree? current)
+        acc
+        (loop (tree-left current)
+              (loop (tree-right current)
+                    (cons (tree-value current) acc))))))
+
