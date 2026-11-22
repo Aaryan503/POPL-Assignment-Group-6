@@ -74,3 +74,12 @@ satisfies(Active, S) :-
 count_solutions(Active, N) :-
     findall(S, (solution(S), satisfies(Active, S)), Solutions),
     length(Solutions, N).
+
+% main holds after printing one solution of clues 1-8, one line per friend in the
+% order Alex, Ben, Carla, Dana, as: Name = [Dept, Lang, Project] (atoms unquoted).
+% Fails (prints nothing) if no solution exists.
+% Mode: main.
+main :-
+    once(( solution(S), satisfies([1,2,3,4,5,6,7,8], S) )),
+    forall(member(p(Name, Dept, Lang, Proj), S),
+           format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Proj])).
