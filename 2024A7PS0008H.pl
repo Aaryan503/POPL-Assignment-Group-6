@@ -69,3 +69,16 @@ wrap_if(Cond, S0, S) :-
     ->  format(string(S), "(~w)", [S0])
     ;   S = S0
     ).
+
+% generate_equation(List, Equation) holds when Equation is the SWI-Prolog
+% string "L=R" where List splits into two non-empty contiguous parts, L is
+% the canonical string of an expression over the left part, R is the canonical
+% string of an expression over the right part, and both have the same value.
+% Mode: generate_equation(+List, -String).
+generate_equation(List, Equation) :-
+    split(List, Left, Right),
+    expr(Left, LTree, Value),
+    expr(Right, RTree, Value),
+    tree_string(LTree, LStr),
+    tree_string(RTree, RStr),
+    format(string(Equation), "~w=~w", [LStr, RStr]).
