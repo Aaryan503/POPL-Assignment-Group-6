@@ -1,4 +1,4 @@
-Group Members and Tasks
+Group 6 Members and Tasks
 
 2024A7PS0029H Aaryan Mehta P1
 2024A7PS0008H Tobit Joshy P2
