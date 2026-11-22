@@ -97,3 +97,4 @@ all_equations(List, Equations) :-
 count_equations(List, N) :-
     all_equations(List, Equations),
     length(Equations, N).
+
